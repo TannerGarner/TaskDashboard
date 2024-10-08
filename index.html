@@ -5,41 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
     <script defer src="./script.js"></script>
+    <script src="https://kit.fontawesome.com/64444e88c9.js" crossorigin="anonymous"></script>
     <title>Task Dashboard</title>
 </head>
 <body>
     <div class="main">
         <div class="nav">
             <span>logo here</span>
+            <ul class="navLinks">
+                <li><a href="#"><i class="fa-solid fa-boxes-stacked"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-table-columns"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-stopwatch"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-calendar"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-chart-simple"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-comments"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-circle-question"></i></a></li>
+            </ul>
+            <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
         <div class="projects">
             <div id="projectList">
+                <h4>Projects</h4>
                 <div class="project">
-                    <i class="fa-solid"></i>
-
+                    <i class="fa-solid fa-globe"></i>
                     <h6>Piper Enterprise</h6>
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
                 <div class="project">
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-globe"></i>
                     <h6>Web Platform</h6>
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
                 <div class="project">
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-globe"></i>
                     <h6>Mobile Loop</h6>
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
                 <div class="project">
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-globe"></i>
                     <h6>Wiro Mobile App</h6>
-                    <i class="fa-solid"></i>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </div>
+            <div id="team">
+                <h4>Team Members</h4>
+                <div class="teamMember">
+                    <i></i>
+                    <div>
+                        <h6>Karen Smith</h6>
+                        <span>Online - 08:23:26</span>
+                    </div>
+                    <i></i>
+                </div>
+                <div class="teamMember">
+                    <i class="fa-solid faucircle-ser-"></i>
+                    <div>
+                        <h6>Steve McConnel</h6>
+                        <span>Online - 12:04:35</span>
+                    </div>
+                    <i class="fa-solid fachevron-down-"></i>
+                </div>
+                <div class="teamMember">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div>
+                        <h6>Sarah Green</h6>
+                        <span>Offline - 06:32:52</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="teamMember">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div>
+                        <h6>Brad Smith</h6>
+                        <span>Offline - 12:03:48</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="teamMember">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div>
+                        <h6>Alice Cornell</h6>
+                        <span>Online - 05:44:35</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+            <div id="time">
+                <h4>Time</h4>
+                <div id="timeDisplay">
+
+                </div>
+            </div>
+            <button id="addProject">+ Add Project</button>
         </div>
         <div class="production">
-            <div class="topBar"></div>
-            <div class="display"></div>
+            <div class="topBar">
+                <div id=""></div>
+            </div>
+            <div class="overview">
+
+            </div>
+            <div class="tasks activeProject">
+                <div id="toDo">
+                    <h4>To Do</h4>
+                    <button id="addTaskTD">+ Add New Task</button>
+
+                </div>
+                <div id="inProgress">
+                    <h4>In Progress</h4>
+                    <button id="addTaskIP">+ Add New Task</button>
+                </div>
+                <div id="needReview">
+                    <h4>Need Review</h4>
+                    <button id="addTaskNR">+ Add New Task</button>
+                </div>
+                <div id="done">
+                    <h4>Done</h4>
+                    <button id="addTaskDone">+ Add New Task</button>
+                </div>
+            </div>
+            <div class="notes"></div>
+            <div class="questions"></div>
+            
         </div>
     </div>
 </body>

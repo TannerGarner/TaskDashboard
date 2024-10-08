@@ -1,1 +1,23 @@
-/*# sourceMappingURL=styles.css.map */
+.main {
+  display: flex;
+}
+
+.production {
+  flex-grow: 1;
+}
+
+.tasks {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.tasks * {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  border: 1px solid black;
+  padding: 5rem;
+}/*# sourceMappingURL=styles.css.map */
