@@ -13,4 +13,5 @@
     background-color: variables.$white;
     @include variables.roundBorder;
     padding: .5rem;
+    font-weight: bold;
 }

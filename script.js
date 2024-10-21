@@ -19,6 +19,12 @@ const inputTitleDone = document.getElementById("inputTitleDone");
 const inputDescriptionDone = document.getElementById("inputDescriptionDone");
 const inputSaveDone = document.getElementById("inputSaveDone");
 
+
+const addTaskButtons = document.querySelectorAll(".addTaskButton");
+const saveTasks = document.querySelectorAll("saveTask");
+const inputDescriptions = document.querySelectorAll("inputDescription");
+const inputTitles = document.querySelectorAll("inputTitle")
+
 class Task {
   constructor(title, description, status, id) {
     this.title = title;
@@ -90,7 +96,11 @@ class Task {
     localStorage.setItem(`tasks`, JSON.stringify(tasks));
   }
 
-  editTask() {}
+  editTask() {
+    //set editor values to current task values. 
+
+    //open editor
+  }
 
   removeTask(domElement) {
     //remove from storage
@@ -116,33 +126,64 @@ class Task {
 
 let idEnding;
 
-addTaskTD.addEventListener("click", function () {
-  idEnding = "TD";
-  toggleTaskInput(idEnding);
-});
+addTaskButtons.forEach(taskButton => {
+  taskButton.addEventListener('click', function(){
+    const parentDiv = taskButton.parentElement;
+    const inputArea = parentDiv.querySelector('.inputArea')
 
-addTaskIP.addEventListener("click", function () {
-  idEnding = "IP";
-  toggleTaskInput(idEnding);
-});
+    console.log(inputArea)
+    inputArea.classList.toggle("toggleDisplay");
+    taskButton.classList.toggle("toggleDisplay");
+  })
+})
 
-addTaskNR.addEventListener("click", function () {
-  idEnding = "NR";
-  toggleTaskInput(idEnding);
-});
+// addTaskTD.addEventListener("click", function () {
+//   idEnding = "TD";
+//   toggleTaskInput(idEnding);
+// });
 
-addTaskDone.addEventListener("click", function () {
-  idEnding = "Done";
-  toggleTaskInput(idEnding);
-});
+// addTaskIP.addEventListener("click", function () {
+//   idEnding = "IP";
+//   toggleTaskInput(idEnding);
+// });
 
-function toggleTaskInput(idKey) {
-  const inputArea = document.getElementById(`inputArea${idKey}`);
-  inputArea.classList.toggle("toggleDisplay");
-  document.getElementById(`addTask${idKey}`).classList.toggle("toggleDisplay");
-}
+// addTaskNR.addEventListener("click", function () {
+//   idEnding = "NR";
+//   toggleTaskInput(idEnding);
+// });
+
+// addTaskDone.addEventListener("click", function () {
+//   idEnding = "Done";
+//   toggleTaskInput(idEnding);
+// });
+
+// function toggleTaskInput(idKey) {
+//   const inputArea = document.getElementById(`inputArea${idKey}`);
+//   inputArea.classList.toggle("toggleDisplay");
+//   document.getElementById(`addTask${idKey}`).classList.toggle("toggleDisplay");
+// }
 
 //Save Task by Section
+
+saveTasks.forEach(saveButton => {
+  saveButton.addEventListener('click', function(){
+    const title = saveButton.closest('.inputTitle');
+    const description = saveButton.closest('.inputDescription');
+    const status = saveButton.parentElement.parentElement.id
+    
+    let newTask = new Task(title, description, status)
+    console.log(newTask);
+
+    //toggle display??
+    newTask.addTask();
+    newTask.saveTask();
+
+    //empty the input area
+    saveButton.closest('.inputTitle').value = '';
+    saveButton.closest('.inputDescription').value = '';
+  })
+})
+
 inputSaveTD.addEventListener("click", function () {
   let title = inputTitleTD.value;
   let description = inputDescriptionTD.value;
