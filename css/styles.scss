@@ -5,25 +5,10 @@
 html, body{
     padding: 0px;
     margin: 0px;
+    font-family: variables.$fontMain;
 }
 
-h2 {
-    margin: 0px;
-}
-
-h3 {
-    margin: 0px;
-}
-
-h4 {
-    margin: 0px;
-}
-
-h5 {
-    margin: 0px;
-}
-
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
@@ -33,10 +18,17 @@ p {
 
 .main{
     display: flex;
+    margin: variables.$marginlg;
+    > * {
+        border: variables.$border;
+        margin: variables.$marginsm;
+        padding: variables.$paddingmd;
+    }
 }
 
 .production{
     flex-grow: 1;
+    background-color: variables.$offWhite;
 }
 
 .tasks{
@@ -44,24 +36,30 @@ p {
     justify-content: space-around;
     gap: 1rem;
 
-    *{
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
+    > *{
+        @include variables.flexCol;
+    }
+
+    .addTaskButton{
+        @include cards.addTask;
     }
 }
 
 .taskHead{
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     position: relative;
 }
 
 .card{
-    border: 1px dotted black;
-    border-radius: 10px;
-    padding: 1.5rem;
-    display: flex;
+    @include cards.taskBox;
+
+    .menuButton{
+        background-color: variables.$orange;
+        border-radius: 120px;
+        padding: 8px 10px;
+    }
 
     .menu{
         position: absolute;

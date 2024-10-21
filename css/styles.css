@@ -1,29 +1,10 @@
-html {
-  font-family: "Quicksand", sans-serif;
-}
-
 html, body {
   padding: 0px;
   margin: 0px;
+  font-family: "Quicksand", sans-serif;
 }
 
-h2 {
-  margin: 0px;
-}
-
-h3 {
-  margin: 0px;
-}
-
-h4 {
-  margin: 0px;
-}
-
-h5 {
-  margin: 0px;
-}
-
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
@@ -33,10 +14,17 @@ p {
 
 .main {
   display: flex;
+  margin: 3rem;
+}
+.main > * {
+  border: 1px, solid, #bebebe;
+  margin: 1rem;
+  padding: 1.5rem;
 }
 
 .production {
   flex-grow: 1;
+  background-color: #f8f8f8;
 }
 
 .tasks {
@@ -44,23 +32,39 @@ p {
   justify-content: space-around;
   gap: 1rem;
 }
-.tasks * {
+.tasks > * {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+.tasks .addTaskButton {
+  color: #11117d;
+  background-color: #ffffff;
+  border: 1px, solid, #bebebe;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
 }
 
 .taskHead {
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   position: relative;
 }
 
 .card {
-  border: 1px dotted black;
-  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px, solid, #bebebe;
+  border-radius: 0.3rem;
   padding: 1.5rem;
   display: flex;
+  flex-direction: column;
+}
+.card .menuButton {
+  background-color: #f98d00;
+  border-radius: 120px;
+  padding: 8px 10px;
 }
 .card .menu {
   position: absolute;

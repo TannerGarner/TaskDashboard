@@ -1,7 +1,10 @@
 
 //Colors
-$offWhite: #eeeeee;
-$backGray: #9e9e9e;
+$white: #ffffff;
+$offWhite: #f8f8f8;
+$backGray: #bebebe;
+$blue: #11117d;
+$orange: #f98d00;
 
 //Padding Margin
 $paddingsm: 1rem;
@@ -11,9 +14,22 @@ $marginsm: 1rem;
 $marginmd: 1.5rem;
 $marginlg: 3rem;
 
+//Borders
+$border: 1px, solid, $backGray;
+$round: .3rem;
+
+@mixin roundBorder {
+    border: $border;
+    border-radius: $round;
+}
+
 //Fonts
 $fontMain: "Quicksand", sans-serif;
 
-html {
-    font-family: $fontMain;
+//Flex
+@mixin flexCol ($gap: 1rem){
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
 }

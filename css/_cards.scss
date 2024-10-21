@@ -1,5 +1,16 @@
 @use "variables";
 
 @mixin taskBox {
-    background-color: $offWhite;
+    background-color: variables.$white;
+    @include variables.roundBorder;
+    padding: variables.$paddingmd;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin addTask {
+    color: variables.$blue;
+    background-color: variables.$white;
+    @include variables.roundBorder;
+    padding: .5rem;
 }
