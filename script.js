@@ -35,15 +35,17 @@ class Task {
     task.classList.add("tasks", "card");
     task.id = `task${this.id}`;
     //task content
+    const header = document.createElement('div')
+    header.classList.add('taskHead')
     const title = document.createElement("h4");
     title.textContent = this.title;
-    //menu drop down
+        //menu drop down
     const menuButton = document.createElement("i");
     menuButton.classList.add("fa-solid", "fa-ellipsis-vertical", "menuButton");
     const menu = document.createElement("div");
     menu.classList.add("toggleDisplay", "menu");
     menu.id = `menu${this.id}`;
-    //menu content
+        //menu content
     const edit = document.createElement("p");
     edit.textContent = "Edit Task";
     edit.id = `edit${this.id}`;
@@ -51,12 +53,15 @@ class Task {
     trash.textContent = "Discard Task";
     menu.appendChild(edit);
     menu.appendChild(trash);
+    //content continued
     const taskDescription = document.createElement("p");
     taskDescription.textContent = this.description;
+    //append content to header
+    header.appendChild(title)
+    header.appendChild(menuButton)
+    header.appendChild(menu);
     //append content to card
-    task.appendChild(title);
-    task.appendChild(menuButton);
-    task.appendChild(menu);
+    task.appendChild(header);
     task.appendChild(taskDescription);
     //append card to DOM
     document.getElementById(`${this.status}`).appendChild(task);

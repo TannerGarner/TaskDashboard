@@ -1,4 +1,35 @@
+@use "variables";
+@use "cards";
 
+
+html, body{
+    padding: 0px;
+    margin: 0px;
+}
+
+h2 {
+    margin: 0px;
+}
+
+h3 {
+    margin: 0px;
+}
+
+h4 {
+    margin: 0px;
+}
+
+h5 {
+    margin: 0px;
+}
+
+h6 {
+    margin: 0px;
+}
+
+p {
+    margin: 0px;
+}
 
 .main{
     display: flex;
@@ -12,6 +43,7 @@
     display: flex;
     justify-content: space-around;
     gap: 1rem;
+
     *{
         flex-grow: 1;
         display: flex;
@@ -19,17 +51,33 @@
     }
 }
 
+.taskHead{
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
 .card{
     border: 1px dotted black;
     border-radius: 10px;
-    padding: 2rem;
-    position: relative;
-    h4{
-        display: inline;
-    }
+    padding: 1.5rem;
+    display: flex;
 
     .menu{
         position: absolute;
+        border: 1px dotted black;
+        top: 30px;
+        right: 10px;
+        *{
+            padding: 10px;
+            margin: 0px;
+        }
+        p {
+            background-color: white;
+            &:hover{
+            background-color: red;
+            }
+        }
     }
 }
 

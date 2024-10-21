@@ -1,0 +1,5 @@
+@use "variables";
+
+@mixin taskBox {
+    background-color: $offWhite;
+}
