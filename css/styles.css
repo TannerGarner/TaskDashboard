@@ -22,23 +22,35 @@ p {
   padding: 1.5rem;
 }
 
+.nav, .projects {
+  filter: blur(2px);
+}
+
 .production {
   flex-grow: 1;
   background-color: #f8f8f8;
 }
 
-.tasks {
-  display: flex;
-  justify-content: space-around;
+.taskFolder {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
-.tasks > * {
+.taskFolder .tasks {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 30%;
+}
+.taskFolder .status {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.tasks .addTaskButton {
+.taskFolder .addTaskButton {
   color: #1212e0;
   background-color: #ffffff;
   border: 1px, solid, #bebebe;

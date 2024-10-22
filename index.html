@@ -108,41 +108,45 @@
             <div class="overview">
 
             </div>
-            <div class="tasks activeProject">
-                <div id="toDo">
+            <div class="taskFolder activeProject">
+                <div id="toDo" class="status">
                     <h4>To Do</h4>
                     <button id="addTaskTD" class ="addTaskButton">+ Add New Task</button>
                     <div id="inputAreaTD" class="card inputArea toggleDisplay">
                         <input type="text" id="inputTitleTD" class="inputTitle" placeholder="Add Title">
                         <textarea id="inputDescriptionTD" class="inputDescription" placeholder="Add Description"></textarea>
                         <button id="inputSaveTD" class="saveTask">Save Task</button>
+                        <button class="cancelTask">Cancel</button>
                     </div>
                 </div>
-                <div id="inProgress">
+                <div id="inProgress" class="status">
                     <h4>In Progress</h4>
                     <button id="addTaskIP" class ="addTaskButton">+ Add New Task</button>
                     <div id="inputAreaIP" class="card inputArea toggleDisplay">
                         <input type="text" id="inputTitleIP" class="inputTitle" placeholder="Add Title">
                         <textarea id="inputDescriptionIP" class="inputDescription" placeholder="Add Description"></textarea>
                         <button id="inputSaveIP" class="saveTask">Save Task</button>
+                        <button class="cancelTask">Cancel</button>
                     </div>
                 </div>
-                <div id="needsReview">
+                <div id="needsReview" class="status">
                     <h4>Needs Review</h4>
                     <button id="addTaskNR" class ="addTaskButton">+ Add New Task</button>
                     <div id="inputAreaNR" class="card inputArea toggleDisplay">
                         <input type="text" id="inputTitleNR" class="inputTitle" placeholder="Add Title">
                         <textarea id="inputDescriptionNR" class="inputDescription" placeholder="Add Description"></textarea>
                         <button id="inputSaveNR" class="saveTask">Save Task</button>
+                        <button class="cancelTask">Cancel</button>
                     </div>
                 </div>
-                <div id="done">
+                <div id="done" class="status">
                     <h4>Done</h4>
                     <button id="addTaskDone" class ="addTaskButton">+ Add New Task</button>
                     <div id="inputAreaDone" class="card inputArea toggleDisplay">
                         <input type="text" id="inputTitleDone" class="inputTitle" placeholder="Add Title">
                         <textarea id="inputDescriptionDone" class="inputDescription" placeholder="Add Description"></textarea>
                         <button id="inputSaveDone" class="saveTask">Save Task</button>
+                        <button class="cancelTask">Cancel</button>
                     </div>
                 </div>
             </div>

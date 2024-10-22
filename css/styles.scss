@@ -26,17 +26,29 @@ p {
     }
 }
 
+
+//Temp Blur effect to get rid of distractions. 
+.nav, .projects {
+    filter: blur(2px);
+}
+
 .production{
     flex-grow: 1;
     background-color: variables.$offWhite;
 }
 
-.tasks{
-    display: flex;
-    justify-content: space-around;
+.taskFolder{
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 
-    > *{
+    .tasks {
+        @include variables.flexCol;
+        max-height: 30%;
+    }
+
+    .status{
         @include variables.flexCol;
     }
 

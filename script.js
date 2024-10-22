@@ -1,29 +1,16 @@
 window.onload = loadTasks;
 
 const toDo = document.getElementById("toDo");
-const addTaskTD = document.getElementById("addTaskTD");
-const addTaskIP = document.getElementById("addTaskIP");
-const addTaskNR = document.getElementById("addTaskNR");
-const addTaskDone = document.getElementById("addTaskDone");
-const inputAreaTD = document.getElementById("inputAreaTD");
-const inputTitleTD = document.getElementById("inputTitleTD");
-const inputDescriptionTD = document.getElementById("inputDescriptionTD");
-const inputSaveTD = document.getElementById("inputSaveTD");
-const inputTitleIP = document.getElementById("inputTitleIP");
-const inputDescriptionIP = document.getElementById("inputDescriptionIP");
-const inputSaveIP = document.getElementById("inputSaveIP");
-const inputTitleNR = document.getElementById("inputTitleNR");
-const inputDescriptionNR = document.getElementById("inputDescriptionNR");
-const inputSaveNR = document.getElementById("inputSaveNR");
-const inputTitleDone = document.getElementById("inputTitleDone");
-const inputDescriptionDone = document.getElementById("inputDescriptionDone");
-const inputSaveDone = document.getElementById("inputSaveDone");
-
+const inProgress = document.getElementById("inProgress");
+const needsReview = document.getElementById("needsReview");
+const done = document.getElementById('done');
+const statusSections = document.querySelectorAll('.status');
 
 const addTaskButtons = document.querySelectorAll(".addTaskButton");
-const saveTasks = document.querySelectorAll("saveTask");
-const inputDescriptions = document.querySelectorAll("inputDescription");
-const inputTitles = document.querySelectorAll("inputTitle")
+const saveTasks = document.querySelectorAll(".saveTask");
+const cancelTasks = document.querySelectorAll(".cancelTask");
+const inputDescriptions = document.querySelectorAll(".inputDescription");
+const inputTitles = document.querySelectorAll(".inputTitle")
 
 class Task {
   constructor(title, description, status, id) {
@@ -39,7 +26,8 @@ class Task {
     //task card
     const task = document.createElement("div");
     task.classList.add("tasks", "card");
-    task.id = `task${this.id}`;
+    task.id = this.id;
+    task.draggable = true;
     //task content
     const header = document.createElement('div')
     header.classList.add('taskHead')
@@ -77,11 +65,15 @@ class Task {
     });
     //Add event listener to edit and delete buttons
     edit.addEventListener("click", () => {
-      this.editTask(task);
+      this.editTask(task, edit);
     });
     trash.addEventListener("click", () => {
       this.removeTask(task);
     });
+    //Add event listener to add drag and drop for element
+    task.addEventListener('dragstart', function(event){
+      event.dataTransfer.setData('text', event.target.id);
+    })
   }
 
   saveTask() {
@@ -96,10 +88,19 @@ class Task {
     localStorage.setItem(`tasks`, JSON.stringify(tasks));
   }
 
-  editTask() {
+  editTask(task, editButton) {
     //set editor values to current task values. 
+    let sectionDiv = editButton.parentElement.parentElement.parentElement.parentElement;
+    let inputArea = sectionDiv.querySelector('.inputArea');
+    inputArea.querySelector('.inputTitle').value = this.title
+    inputArea.querySelector('.inputDescription').value = this.description
 
-    //open editor
+    //delete current task
+    this.removeTask(task);
+
+    //open editor, toggle displays
+    let addButton = sectionDiv.querySelector('.addTaskButton');
+    toggleDisplay(inputArea, addButton);
   }
 
   removeTask(domElement) {
@@ -111,7 +112,6 @@ class Task {
     if (index !== -1) {
       tasks.splice(index, 1);
     }
-    console.log(tasks);
 
     localStorage.setItem(`tasks`, JSON.stringify(tasks));
 
@@ -121,132 +121,68 @@ class Task {
     }
   }
 
-  moveTask() {}
+  // moveTask() {
+  //   let task = document.getElementById(this.id);
+
+  //   task.addEventListener('dragstart', function(event) {
+  //     event.dataTransfer.setData('text', event.target.id);
+  //   })
+
+
+  // }
 }
 
-let idEnding;
+function toggleDisplay (inputArea, addButton){
+  inputArea.classList.toggle("toggleDisplay");
+  addButton.classList.toggle("toggleDisplay")
+}
 
-addTaskButtons.forEach(taskButton => {
-  taskButton.addEventListener('click', function(){
-    const parentDiv = taskButton.parentElement;
+addTaskButtons.forEach(addButton => {
+  addButton.addEventListener('click', function(){
+    const parentDiv = addButton.parentElement;
     const inputArea = parentDiv.querySelector('.inputArea')
-
-    console.log(inputArea)
-    inputArea.classList.toggle("toggleDisplay");
-    taskButton.classList.toggle("toggleDisplay");
+    //toggle Display
+    toggleDisplay(inputArea, addButton);
   })
 })
 
-// addTaskTD.addEventListener("click", function () {
-//   idEnding = "TD";
-//   toggleTaskInput(idEnding);
-// });
-
-// addTaskIP.addEventListener("click", function () {
-//   idEnding = "IP";
-//   toggleTaskInput(idEnding);
-// });
-
-// addTaskNR.addEventListener("click", function () {
-//   idEnding = "NR";
-//   toggleTaskInput(idEnding);
-// });
-
-// addTaskDone.addEventListener("click", function () {
-//   idEnding = "Done";
-//   toggleTaskInput(idEnding);
-// });
-
-// function toggleTaskInput(idKey) {
-//   const inputArea = document.getElementById(`inputArea${idKey}`);
-//   inputArea.classList.toggle("toggleDisplay");
-//   document.getElementById(`addTask${idKey}`).classList.toggle("toggleDisplay");
-// }
-
-//Save Task by Section
+//Save Task button event listener
 
 saveTasks.forEach(saveButton => {
   saveButton.addEventListener('click', function(){
-    const title = saveButton.closest('.inputTitle');
-    const description = saveButton.closest('.inputDescription');
-    const status = saveButton.parentElement.parentElement.id
+    //get Inputs
+    const inputArea = saveButton.parentElement;
+    const title = inputArea.querySelector('.inputTitle').value;
+    const description = inputArea.querySelector('.inputDescription').value;
+    const status = inputArea.parentElement.id
     
     let newTask = new Task(title, description, status)
-    console.log(newTask);
 
-    //toggle display??
+    //toggle display
+    const addButton = inputArea.parentElement.querySelector('.addTaskButton');
+    toggleDisplay(inputArea, addButton);
+
+    //Handle task
     newTask.addTask();
     newTask.saveTask();
 
     //empty the input area
-    saveButton.closest('.inputTitle').value = '';
-    saveButton.closest('.inputDescription').value = '';
+    inputArea.querySelector('.inputTitle').value = '';
+    inputArea.querySelector('.inputDescription').value = '';
   })
 })
 
-inputSaveTD.addEventListener("click", function () {
-  let title = inputTitleTD.value;
-  let description = inputDescriptionTD.value;
-  let status = "toDo";
-  let toDoTask = new Task(title, description, status);
-  console.log(toDoTask);
-
-  toggleTaskInput("TD");
-  toDoTask.addTask();
-  toDoTask.saveTask();
-
-  //empty input area
-  inputTitleTD.value = "";
-  inputDescriptionTD.value = "";
-});
-
-inputSaveIP.addEventListener("click", function () {
-  let title = inputTitleIP.value;
-  let description = inputDescriptionIP.value;
-  let status = "inProgress";
-  let inProgressTask = new Task(title, description, status);
-  console.log(inProgressTask);
-
-  toggleTaskInput("IP");
-  inProgressTask.addTask();
-  inProgressTask.saveTask();
-
-  //empty input area
-  inputTitleIP.value = "";
-  inputDescriptionIP.value = "";
-});
-
-inputSaveNR.addEventListener("click", function () {
-  let title = inputTitleNR.value;
-  let description = inputDescriptionNR.value;
-  let status = "needsReview";
-  let needsReviewTask = new Task(title, description, status);
-  console.log(needsReviewTask);
-
-  toggleTaskInput("NR");
-  needsReviewTask.addTask();
-  needsReviewTask.saveTask();
-
-  //empty input area
-  inputTitleNR.value = "";
-  inputDescriptionNR.value = "";
-});
-
-inputSaveDone.addEventListener("click", function () {
-  let title = inputTitleDone.value;
-  let description = inputDescriptionDone.value;
-  let status = "done";
-  let doneTask = new Task(title, description, status);
-  console.log(doneTask);
-
-  toggleTaskInput("Done");
-  doneTask.addTask();
-  doneTask.saveTask();
-
-  //empty input area
-  inputTitleDone.value = "";
-  inputDescriptionDone.value = "";
-});
+//Cancel Task Button Event Listener
+cancelTasks.forEach(cancelButton => {
+  cancelButton.addEventListener('click', function(){
+    //toggle display
+    const inputArea = cancelButton.parentElement;
+    const addButton = inputArea.parentElement.querySelector('.addTaskButton');
+    toggleDisplay(inputArea, addButton);
+    inputArea.querySelector('.inputTitle').value = '';
+    inputArea.querySelector('.inputDescription').value = '';
+  })
+})
 
 function loadTasks() {
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -260,3 +196,18 @@ function loadTasks() {
     loadTask.addTask();
   });
 }
+
+statusSections.forEach((section) => {
+  section.addEventListener('dragover', function(event){
+    event.preventDefault();
+  })
+});
+
+statusSections.forEach((section) => {
+  section.addEventListener('drop', function(event){
+    event.preventDefault();
+    const taskID = event.dataTransfer.getData('text');
+    const task = document.getElementById(taskID);
+    section.appendChild(task);
+  })
+})
