@@ -7,17 +7,18 @@ const done = document.getElementById('done');
 const statusSections = document.querySelectorAll('.status');
 
 const addTaskButtons = document.querySelectorAll(".addTaskButton");
+const addItems = document.querySelectorAll(".addItem");
 const saveTasks = document.querySelectorAll(".saveTask");
 const cancelTasks = document.querySelectorAll(".cancelTask");
 const inputDescriptions = document.querySelectorAll(".inputDescription");
 const inputTitles = document.querySelectorAll(".inputTitle")
 
 class Task {
-  constructor(title, description, status, id) {
+  constructor(title, description, items, status, id) {
     this.title = title;
     this.description = description;
     this.status = status;
-    this.items = this.items;
+    this.items = items;
     this.users = this.users;
     this.id = id || Math.floor(Math.random() * 100000);
   }
@@ -47,16 +48,25 @@ class Task {
     trash.textContent = "Discard Task";
     menu.appendChild(edit);
     menu.appendChild(trash);
-    //content continued
-    const taskDescription = document.createElement("p");
-    taskDescription.textContent = this.description;
     //append content to header
     header.appendChild(title)
     header.appendChild(menuButton)
     header.appendChild(menu);
+    //content continued
+    const taskDescription = document.createElement("p");
+    taskDescription.textContent = this.description;
+      //bullet point list
+    const itemList = document.createElement('ul');
+    console.log(this.items);
+    this.items?.forEach(item => {
+      let itemDom = document.createElement('li');
+      itemDom.textContent = item;
+      itemList.appendChild(itemDom);
+    })
     //append content to card
     task.appendChild(header);
     task.appendChild(taskDescription);
+    task.appendChild(itemList);
     //append card to DOM
     document.getElementById(`${this.status}`).appendChild(task);
     //Add event listener to menu button
@@ -70,7 +80,7 @@ class Task {
     trash.addEventListener("click", () => {
       this.removeTask(task);
     });
-    //Add event listener to add drag and drop for element
+    //Add event listener for drag and drop
     task.addEventListener('dragstart', function(event){
       event.dataTransfer.setData('text', event.target.id);
     })
@@ -83,6 +93,7 @@ class Task {
       status: this.status,
       title: this.title,
       description: this.description,
+      items: this.items
     });
 
     localStorage.setItem(`tasks`, JSON.stringify(tasks));
@@ -94,6 +105,13 @@ class Task {
     let inputArea = sectionDiv.querySelector('.inputArea');
     inputArea.querySelector('.inputTitle').value = this.title
     inputArea.querySelector('.inputDescription').value = this.description
+    this.items?.forEach(item => {
+      const itemList = inputArea.querySelector('.itemList');
+      const firstInput = itemList.firstElementChild;
+      let newInput = firstInput.cloneNode();
+      newInput.value = item;
+      itemList.insertBefore(newInput, itemList.lastElementChild);
+    })
 
     //delete current task
     this.removeTask(task);
@@ -133,8 +151,18 @@ class Task {
 }
 
 function toggleDisplay (inputArea, addButton){
+  //toggle the Input Area and the Add Task Button inversely
   inputArea.classList.toggle("toggleDisplay");
-  addButton.classList.toggle("toggleDisplay")
+  addButton.classList.toggle("toggleDisplay");
+  //Reset the number of item inputs to 1 within the input area
+  if (inputArea.classList.contains('toggleDisplay')){
+    const itemList = inputArea.querySelector('.itemList');
+    let i = itemList.childElementCount;
+    for (;i > 1; i--){
+      let lastItemInput = itemList.lastElementChild;
+      lastItemInput.remove();
+    }
+  }
 }
 
 addTaskButtons.forEach(addButton => {
@@ -146,6 +174,20 @@ addTaskButtons.forEach(addButton => {
   })
 })
 
+//Add Item Button Event LIstener
+
+addItems.forEach(itemButton => {
+  itemButton.addEventListener('click', function(){
+    //Add new list input option
+    const inputArea = itemButton.parentElement;
+    const itemList = inputArea.querySelector('.itemList');
+    const firstInput = itemList.firstElementChild;
+    let newInput = firstInput.cloneNode();
+    newInput.value = '';
+    itemList.appendChild(newInput);
+  })
+})
+
 //Save Task button event listener
 
 saveTasks.forEach(saveButton => {
@@ -154,15 +196,20 @@ saveTasks.forEach(saveButton => {
     const inputArea = saveButton.parentElement;
     const title = inputArea.querySelector('.inputTitle').value;
     const description = inputArea.querySelector('.inputDescription').value;
-    const status = inputArea.parentElement.id
+    const status = inputArea.parentElement.id;
+    const items = [];
+    const listDOM = inputArea.querySelectorAll('.inputli');
+    listDOM.forEach(item => {
+      items.push(item.value);
+    })
     
-    let newTask = new Task(title, description, status)
-
     //toggle display
     const addButton = inputArea.parentElement.querySelector('.addTaskButton');
     toggleDisplay(inputArea, addButton);
 
     //Handle task
+    let newTask = new Task(title, description, items, status)
+
     newTask.addTask();
     newTask.saveTask();
 
@@ -173,6 +220,7 @@ saveTasks.forEach(saveButton => {
 })
 
 //Cancel Task Button Event Listener
+
 cancelTasks.forEach(cancelButton => {
   cancelButton.addEventListener('click', function(){
     //toggle display
@@ -184,18 +232,23 @@ cancelTasks.forEach(cancelButton => {
   })
 })
 
+//Load Tasks from Storage on page Load (see top of this document)
+
 function loadTasks() {
   let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
   tasks.forEach((taskData) => {
     let loadTask = new Task(
       taskData.title,
       taskData.description,
+      taskData.items || [],
       taskData.status,
       taskData.id
     );
     loadTask.addTask();
   });
 }
+
+//Draggability
 
 statusSections.forEach((section) => {
   section.addEventListener('dragover', function(event){

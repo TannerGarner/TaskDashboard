@@ -5,6 +5,7 @@
 html, body{
     padding: 0px;
     margin: 0px;
+    height: 100%;
     font-family: variables.$fontMain;
 }
 
@@ -17,8 +18,9 @@ p {
 }
 
 .main{
+    height: 100%;
     display: flex;
-    margin: variables.$marginlg;
+    // margin: variables.$marginlg;
     > * {
         border: variables.$border;
         margin: variables.$marginsm;
@@ -29,11 +31,13 @@ p {
 
 //Temp Blur effect to get rid of distractions. 
 .nav, .projects {
+    display: none;
     filter: blur(2px);
 }
 
 .production{
-    flex-grow: 1;
+    // flex-grow: 1;
+    height: 100%;
     background-color: variables.$offWhite;
 }
 
@@ -45,7 +49,13 @@ p {
 
     .tasks {
         @include variables.flexCol;
-        max-height: 30%;
+        p{
+            overflow: hidden;
+            
+        }
+        .taskHead{
+            display: flex;
+        }
     }
 
     .status{
